@@ -1,0 +1,15 @@
+library("DESeq2")
+library(dplyr)
+library(ggplot2)
+library("ggbeeswarm")
+library("RColorBrewer")
+library("gplots")
+library(GenomicFeatures)
+
+library("GenomicFeatures")
+refgenes <- makeTxDbFromGFF("oryx.gtf",format="gtf")
+transcripts <- genes(refgenes, columns=c("tx_id", "tx_name"))
+tss <- resize(transcripts, width=1, fix='start')
+
+write.table(as.data.frame(tss), file = "TSS.bed",quote=FALSE,sep="\t",col.names=FALSE)
+write.table(as.data.frame(transcripts), file = "gene_body.bed",quote=FALSE,sep="\t",col.names=FALSE)
